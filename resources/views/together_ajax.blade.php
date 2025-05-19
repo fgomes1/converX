@@ -61,6 +61,13 @@
   <input type="text" id="prompt" value="quero um formato json dessa tabela" style="width: 100%; padding: 8px; margin-bottom: 10px;">
 </div>
 
+<div>
+  <details>
+    <summary>Visualizar JSON bruto</summary>
+    <pre id="json-raw" style="background: #f8f9fa; padding: 10px; max-height: 300px; overflow: auto;"></pre>
+  </details>
+</div>
+
   <script>
   // Botão para enviar arquivo (mantido por compatibilidade)
   document.getElementById('btnEnviar').addEventListener('click', () => {
@@ -105,8 +112,12 @@
     axios.post('/together/chat', formData, { withCredentials: true })
       .then(res => {
         console.log('URL da imagem fixa:', res.data.image_url);
-        document.getElementById('resultado').innerText =
-          JSON.stringify(res.data.body, null, 2);
+        
+        // Se adicionar o elemento, use:
+        document.getElementById('json-raw').innerText = JSON.stringify(res.data.body, null, 2);
+        
+        // Formatar e exibir como tabela (ao invés de mostrar JSON bruto)
+        formatJsonToTable(res.data.body);
       })
       .catch(err => {
         console.error('Erro completo:', err.response?.data || err);
