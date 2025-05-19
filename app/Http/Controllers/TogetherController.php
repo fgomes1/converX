@@ -37,8 +37,8 @@ class TogetherController extends Controller
         $path = $file->storeAs('public/uploads', $filename);
         
         // Construir a URL para o arquivo
-        $ngrokUrl = rtrim(env('NGROK_URL', 'https://8978-191-5-48-91.ngrok-free.app'), '/');
-        $publicUrl = $ngrokUrl . Storage::url('uploads/' . $filename);
+        $appUrl = rtrim(env('APP_URL', 'https://converx-production-2911.up.railway.app'), '/');
+        $publicUrl = $appUrl . Storage::url('uploads/' . $filename);
         
         Log::info("[Together] Generated image URL: $publicUrl");
         
